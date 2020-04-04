@@ -1,0 +1,77 @@
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing:border-box;
+}
+
+
+.areaKeyBoard{
+width:100vw;
+height: 350px;
+background-color: brown;
+position: fixed;
+bottom:0;
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+}
+
+.keysBoard {
+    width: 87vw;
+    height: 280px;
+   
+
+}
+
+
+.button {
+    min-width: 55px;
+    height: 55px;
+    background-color: white;
+    opacity: 0.6;
+    border-color: black;
+    border-width: 2px;
+    color: black;
+    font-size: 35px;
+    border-radius: 25%;
+    outline: none;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    vertical-align: top;
+    text-align: center;
+}
+
+.button:hover{
+    opacity: 0.8;
+}
+
+
+.button:active {
+    opacity: 1;
+}
+
+.active {
+    opacity: 1;
+}
+
+
+
+.textarea {
+
+    width: 100%;
+    height: calc(100vh - 350px);
+    background-color:rgba(165 , 42 , 42 ,0.8);
+    padding: 50px 100px;
+    font-size: 40px;
+    outline: none;
+    border-color: rgba(165 , 42 , 42 ,0.8);
+  
+    
+}
+
+
