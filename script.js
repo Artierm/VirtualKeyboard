@@ -96,14 +96,24 @@ class KeyBoard {
     _mouseClick() {
 
         document.querySelectorAll('.button').forEach(elem => elem.addEventListener('click', () => {
-
+            let cursorPositionStart = this.Element.textarea.selectionStart;
+            let cursorPositionEnd = this.Element.textarea.selectionEnd;
+           // console.log(cursorPositionStart);
             switch (event.target.innerText) {
                 case "Backspace":
-                    this.Element.textarea.value = this.Element.textarea.value.slice(0, -1);
+                   // this.Element.textarea.value = this.Element.textarea.value.slice(0, -1);    
+                    this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart-1)+this.Element.textarea.value.slice(cursorPositionStart,this.Element.textarea.length);
+                   //this.Element.textarea.value = this.Element.textarea.setSelectionRange(this.Element.selectionStart,this.Element.selectionEnd)
+                   this.Element.textarea.selectionStart = cursorPositionStart;
+                    this.Element.textarea.selectionEnd = cursorPositionStart;
                     break;
 
                 case "Del":
-                    this.Element.textarea.value = this.Element.textarea.value.slice(0, -1);
+                   //this.Element.textarea.value = this.Element.textarea.value.slice(0, -1);
+                    this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart)+this.Element.textarea.value.slice(cursorPositionStart+2,this.Element.textarea.length);
+                    //this.Element.textarea.value = this.Element.textarea.value.slice(0, textarea.selectionStart)+this.Element.textarea.value.slice(textarea.selectionEnd,textarea.length);
+                     this.Element.textarea.selectionStart = cursorPositionStart;
+                     this.Element.textarea.selectionEnd = cursorPositionStart;
                     break;
 
                 case "Enter":
@@ -118,6 +128,16 @@ class KeyBoard {
                     this.Element.textarea.value += " ";
                     break;
     
+                case "→":
+                    this.Element.textarea.selectionStart = cursorPositionStart+1;
+                    this.Element.textarea.selectionEnd = cursorPositionEnd+1;
+                   break;
+
+                case "←" :
+                    this.Element.textarea.selectionStart = cursorPositionStart-1;
+                    this.Element.textarea.selectionEnd = cursorPositionEnd-1;
+                    break;
+
 
                 default:
                     if (!this.SystemKeys.includes(event.target.innerText))
@@ -140,6 +160,8 @@ class KeyBoard {
                 if (event.code == elem.getAttribute("id")) {
                     elem.classList.add('active');
                     elem.click();
+                    event.preventDefault();
+                    this.Element.textarea.focus();
                 }
 
             })
