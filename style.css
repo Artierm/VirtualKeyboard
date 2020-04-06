@@ -20,16 +20,17 @@ text-align: center;
 }
 
 .keysBoard {
-    width: 87vw;
+    width: 90vw;
     height: 280px;
+    transform: rotateX(30deg);
    
 
 }
 
 
 .button {
-    min-width: 55px;
-    height: 55px;
+    min-width: 59px;
+    height: 59px;
     background-color: white;
     opacity: 0.6;
     border-color: black;
@@ -44,6 +45,8 @@ text-align: center;
     justify-content: center;
     vertical-align: top;
     text-align: center;
+    margin-top: 3px;
+    margin-left: 1px;
 }
 
 .button:hover{
@@ -51,15 +54,20 @@ text-align: center;
 }
 
 
+
 .button:active {
     opacity: 1;
+    margin-top: 0;
 }
 
 .active {
     opacity: 1;
+    margin-top: 0;
 }
 
-
+.capsLock {
+    background-color: white;
+}
 
 .textarea {
 

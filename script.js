@@ -37,7 +37,7 @@ class KeyBoard {
 
 
     SystemKeys = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Win', 'Alt', 'Space', 'Ctrl']
-    ShiftKeysCode = ['Backquote','Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'BracketLeft', 'BracketRight', 'Backslash', 'Semicolon', 'Quote', 'Comma', 'Period', 'Slash']
+    ShiftKeysCode = ['Backquote','Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'BracketLeft', 'BracketRight', 'Backslash', 'Semicolon', 'Quote', 'Comma', 'Period', 'Slash',]
     ShiftKeysValue = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?']
     ShiftKeysCode2 = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backslash', 'Slash']
     ShiftKeysValue2 = ['!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', '|', ',']
@@ -45,18 +45,16 @@ class KeyBoard {
     ShiftKeysNormalValue2 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=','\\','.']
 
     constructor() {
-        //создаем клавиутуру
+       
         this.Element.areaKeyBoard = document.createElement("div");
         this.Element.KeysBoard = document.createElement("div");
         this.Element.textarea = document.createElement("textarea");
 
-        //добавление css 
         this.Element.areaKeyBoard.classList.add("areaKeyBoard");
         this.Element.KeysBoard.classList.add("keysBoard");
         this.Element.textarea.classList.add("textarea");
         this.Element.KeysBoard.appendChild(this._createKeys());
 
-        //добавить Dom
         this.Element.areaKeyBoard.appendChild(this.Element.KeysBoard);
         document.body.appendChild(this.Element.areaKeyBoard);
         document.body.appendChild(this.Element.textarea);
@@ -69,8 +67,10 @@ class KeyBoard {
         this._keyShiftDown();
         this._keyShiftUp();
         this._languageValue();
-        //this._keyShiftRightDown();
-       // this._keyShiftRightUp();
+        this._keyShiftRightDown();
+        this._keyShiftRightUp();
+        this._capsKeysDown();
+       this._capsMouseDown();
 
     }
 
@@ -88,9 +88,7 @@ class KeyBoard {
             }
 
         })
-
         return fragment;
-
     }
 
 
@@ -119,28 +117,14 @@ class KeyBoard {
                 case "Space":
                     this.Element.textarea.value += " ";
                     break;
-
-                case "CapsLock":
-                    this.Properties.caps = !this.Properties.caps;
-
-                    if (this.Properties.caps)
-                        document.querySelectorAll(".button").forEach(elem => {
-                            if (elem.innerText.length == 1)
-                                elem.innerText = elem.innerText.toUpperCase();
-                        })
-                    else {
-                        document.querySelectorAll(".button").forEach(elem => {
-                            if (elem.innerText.length == 1)
-                                elem.innerText = elem.innerText.toLowerCase();
-                        })
-                    }
-                    break;
+    
 
                 default:
                     if (!this.SystemKeys.includes(event.target.innerText))
                         this.Element.textarea.value += event.target.innerText;
             }
-        }))
+        })
+        )
 
     }
 
@@ -156,7 +140,6 @@ class KeyBoard {
                 if (event.code == elem.getAttribute("id")) {
                     elem.classList.add('active');
                     elem.click();
-
                 }
 
             })
@@ -182,13 +165,16 @@ class KeyBoard {
 
     _keyShiftUp() {
         window.addEventListener('keyup', (event) => {
+
             if (event.code == document.querySelector('#ShiftLeft').getAttribute('id'))
                 document.querySelector('#ShiftLeft').dispatchEvent(new Event('mouseup'));
+
         })
     }
 
     _keyShiftRightUp() {
         window.addEventListener('keyup', (event) => {
+
             if (event.code == document.querySelector('#ShiftRight').getAttribute('id'))
                 document.querySelector('#ShiftLeft').dispatchEvent(new Event('mouseup'));
         })
@@ -214,20 +200,6 @@ class KeyBoard {
 
     _mouseShiftDown() {
         document.querySelector('#ShiftLeft').addEventListener('mousedown', (event) => {
-            this.Properties.shift =! this.Properties.shift 
-            if (!this.Properties.caps)
-                document.querySelectorAll(".button").forEach(elem => {
-                    if (elem.innerText.length == 1)
-                        elem.innerText = elem.innerText.toUpperCase();
-
-                })
-            else {
-                document.querySelectorAll(".button").forEach(elem => {
-                    if (elem.innerText.length == 1)
-                        elem.innerText = elem.innerText.toLowerCase();
-                })
-            }
-
             if (!this.Properties.shift) {
                 for (let i = 0; i < this.ShiftKeysCode.length; i++) {
                     document.querySelector(`#${this.ShiftKeysCode[i]}`).innerText = this.ShiftKeysValue[i];
@@ -242,27 +214,26 @@ class KeyBoard {
 
             }
 
+            if (!this.Properties.caps) {
+                document.querySelectorAll(".button").forEach(elem => {
+                    if (elem.innerText.length == 1)
+                        elem.innerText = elem.innerText.toUpperCase();
+
+                })
+            }
+            else {
+                document.querySelectorAll(".button").forEach(elem => {
+                    if (elem.innerText.length == 1)
+                        elem.innerText = elem.innerText.toLowerCase();
+                })
+            }
         })
     }
 
 
     _mouseShiftUp() {
         document.querySelector('#ShiftLeft').addEventListener('mouseup', (event) => {
-            this.Properties.shift =! this.Properties.shift 
-            if (!this.Properties.caps)
-                document.querySelectorAll(".button").forEach(elem => {
-                    if (elem.innerText.length == 1)
-                        elem.innerText = elem.innerText.toLowerCase();
-
-                })
-            else {
-                document.querySelectorAll(".button").forEach(elem => {
-                    if (elem.innerText.length == 1)
-                        elem.innerText = elem.innerText.toUpperCase();
-                })
-            }
-
-            if (this.Properties.shift) {
+               if (!this.Properties.shift) {
                 for (let i = 0; i < this.ShiftKeysCode.length; i++) {
                     document.querySelector(`#${this.ShiftKeysCode[i]}`).innerText = this.ShiftKeysNormalValue[i];
                                  
@@ -271,17 +242,74 @@ class KeyBoard {
             else {
                 for (let i = 0; i < this.ShiftKeysCode2.length; i++) {
                     document.querySelector(`#${this.ShiftKeysCode2[i]}`).innerText = this.ShiftKeysNormalValue2[i];
-                   
+                    console.log('ded');   
                 }
 
+            }
+            if (!this.Properties.caps) {
+                document.querySelectorAll(".button").forEach(elem => {
+                    if (elem.innerText.length == 1)
+                        elem.innerText = elem.innerText.toLowerCase();
+
+                })
+            }
+            else {
+                document.querySelectorAll(".button").forEach(elem => {
+                    if (elem.innerText.length == 1)
+                        elem.innerText = elem.innerText.toUpperCase();
+                })
             }
         })
     }
 
+    _capsKeysDown() {
+        window.addEventListener('keyup',(event)=>{
+            if(event.code == "CapsLock"){
+                this.Properties.caps =!this.Properties.caps;
+            if (this.Properties.caps)
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toUpperCase();
+                        })
+                    else {
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toLowerCase();
+                        })
+                    }
+                    if(!event.classList.contains('capsLock')){
+                    event.classList.add('capsLock') }
+                    else{
+                        event.classList.remove('capsLock')
+                    }
+            }
+        })
+    }
 
+    _capsMouseDown () {
+        document.querySelector('#CapsLock').addEventListener('mouseup',()=>{
+            this.Properties.caps =!this.Properties.caps;
+            if (this.Properties.caps)
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toUpperCase();
+                        })
+                    else {
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toLowerCase();
+                        })
+                    }
+                    if(!event.classList.contains('capsLock')){
+                    event.classList.add('capsLock') }
+                    else{
+                        event.classList.remove('capsLock')
+                    }
+        })
+    }
     _languageValue() {
         window.addEventListener('keydown', (event) => {
-            if (event.code == "ControlLeft")
+            if (event.code == "ControlLeft" || event.code == "ControlRight"){
                 this.Properties.control = true;
                 if ((this.Properties.control) && (this.Properties.alt)) {
                     this.Properties.shift = !this.Properties.shift;
@@ -298,41 +326,66 @@ class KeyBoard {
                             i++;
                         });
                     }
+                    if (this.Properties.caps)
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toUpperCase();
+                        })
+                    else {
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toLowerCase();
+                        })
+                    }
                 }
+            }
             
         })
 
         window.addEventListener('keydown', (event) => {
-            if (event.code == "AltLeft")
+            if (event.code == "AltLeft" || event.code == "AltRight"){
                this.Properties.alt = true;
                if ((this.Properties.control) && (this.Properties.alt)) {
-                this.Properties.shift = !this.Properties.shift;
-                let i = 0;
-                if (!this.Properties.shift) {
-                    document.querySelectorAll(".button").forEach((elem) => {
-                        elem.innerText = this.KeysValuesRu[i];
-                        i++;
-                  
-                    });
-                }
-                else {
-                    document.querySelectorAll(".button").forEach((elem, i) => {
-                        elem.innerText = this.KeysValuesEng[i];
-                        i++;
+                    this.Properties.shift = !this.Properties.shift;
+                    let i = 0;
+                    if (!this.Properties.shift) {
+                        document.querySelectorAll(".button").forEach((elem) => {
+                            elem.innerText = this.KeysValuesRu[i];
+                            i++;
                     
-                    });
+                        });
+                    }
+                    else {
+                        document.querySelectorAll(".button").forEach((elem, i) => {
+                            elem.innerText = this.KeysValuesEng[i];
+                            i++;
+                        
+                        });
+                    }
+    
+                    if (this.Properties.caps)
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toUpperCase();
+                        })
+                    else {
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toLowerCase();
+                        })
+                    }
                 }
             }
             
         })
 
         window.addEventListener('keyup', (event) => {
-            if (event.code == "ControlLeft")
+            if (event.code == "ControlLeft" || event.code == "ControlRight"){
                 this.Properties.control = false;
                 if ((this.Properties.control) && (this.Properties.alt)) {
                     this.Properties.shift = !this.Properties.shift;
                     let i = 0;
-                    if (this.Properties.shift) {
+                    if (!this.Properties.shift) {
                         document.querySelectorAll(".button").forEach((elem) => {
                             elem.innerText = this.KeysValuesRu[i];
                             i++;
@@ -346,13 +399,26 @@ class KeyBoard {
                      
                         });
                     }
+
+
+                    if (this.Properties.caps)
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toUpperCase();
+                        })
+                    else {
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toLowerCase();
+                        })
+                    }
                 }
-     
+            }
           
         })
 
         window.addEventListener('keyup', (event) => {
-            if (event.code == "AltLeft")
+            if (event.code == "AltLeft" || event.code == "AltRight"){
                 this.Properties.alt = false;
                 if ((this.Properties.control) && (this.Properties.alt)) {
                     this.Properties.shift = !this.Properties.shift;
@@ -369,34 +435,24 @@ class KeyBoard {
                             i++;
                         });
                     }
+
+                    if (this.Properties.caps)
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toUpperCase();
+                        })
+                    else {
+                        document.querySelectorAll(".button").forEach(elem => {
+                            if (elem.innerText.length == 1)
+                                elem.innerText = elem.innerText.toLowerCase();
+                        })
+                    }
                 }
+            }
         
         })
 
-    }
-
-
-    //   shift () {
-      
-    //     if ((this.Properties.control) && (this.Properties.alt)) {
-    //         this.Properties.shift = !this.Properties.shift;
-    //         let i = 0;
-    //         if (!this.Properties.shift) {
-    //             document.querySelectorAll(".button").forEach((elem) => {
-    //                 elem.innerText = this.KeysValuesRu[i];
-    //                 i++;
-    //             });
-    //         }
-    //         else {
-    //             document.querySelectorAll(".button").forEach((elem, i) => {
-    //                 elem.innerText = this.KeysValuesEng[i];
-    //                 i++;
-    //             });
-    //         }
-    //     }
-    // }
-    
+    }    
 }
 
 let keysBoard = new KeyBoard();
-//keysBoard.initial();
