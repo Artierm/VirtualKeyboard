@@ -4,7 +4,6 @@ class KeyBoard {
         areaKeyBoard: null,
         KeysBoard: null,
         textarea: null,
-        Keys: []
     }
 
     Properties = {
@@ -33,16 +32,16 @@ class KeyBoard {
         'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete',
         'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter',
         'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ShiftRight', 'ArrowUp', 
-        'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight']
+        'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
 
 
-    SystemKeys = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Win', 'Alt', 'Space', 'Ctrl']
-    ShiftKeysCode = ['Backquote','Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'BracketLeft', 'BracketRight', 'Backslash', 'Semicolon', 'Quote', 'Comma', 'Period', 'Slash',]
-    ShiftKeysValue = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?']
-    ShiftKeysCode2 = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backslash', 'Slash']
-    ShiftKeysValue2 = ['!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', '|', ',']
-    ShiftKeysNormalValue = ['`','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\\', ';', '\'', ',', '.', '/']
-    ShiftKeysNormalValue2 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=','\\','.']
+    SystemKeys = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Win', 'Alt', 'Space', 'Ctrl'];
+    ShiftKeysCode = ['Backquote','Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'BracketLeft', 'BracketRight', 'Backslash', 'Semicolon', 'Quote', 'Comma', 'Period', 'Slash',];
+    ShiftKeysValue = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '{', '}', '|', ':', '"', '<', '>', '?'];
+    ShiftKeysCode2 = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backslash', 'Slash'];
+    ShiftKeysValue2 = ['!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', '|', ','];
+    ShiftKeysNormalValue = ['`','1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '[', ']', '\\', ';', '\'', ',', '.', '/'];
+    ShiftKeysNormalValue2 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=','\\','.'];
 
     constructor() {
        
@@ -95,58 +94,66 @@ class KeyBoard {
 
     _mouseClick() {
 
-        document.querySelectorAll('.button').forEach(elem => elem.addEventListener('click', () => {
-            let cursorPositionStart = this.Element.textarea.selectionStart;
-            let cursorPositionEnd = this.Element.textarea.selectionEnd;
-           // console.log(cursorPositionStart);
+        document.querySelector('.keysBoard').addEventListener('click',(event)=>{
+            if(event.target.classList.contains('button'))
+            {
+            let cursorPositionStart = this.Element.textarea.selectionEnd+1;
+            let cursorPositionEnd = this.Element.textarea.selectionEnd+1;
             switch (event.target.innerText) {
                 case "Backspace":
-                   // this.Element.textarea.value = this.Element.textarea.value.slice(0, -1);    
-                    this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart-1)+this.Element.textarea.value.slice(cursorPositionStart,this.Element.textarea.length);
-                   //this.Element.textarea.value = this.Element.textarea.setSelectionRange(this.Element.selectionStart,this.Element.selectionEnd)
-                   this.Element.textarea.selectionStart = cursorPositionStart;
-                    this.Element.textarea.selectionEnd = cursorPositionStart;
+                    if(this.Element.textarea.selectionStart !=0){
+                    this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart-2)+this.Element.textarea.value.slice(cursorPositionStart-1,this.Element.textarea.length);
+                   this.Element.textarea.selectionStart = cursorPositionEnd-2;
+                    this.Element.textarea.selectionEnd = cursorPositionEnd-2;
                     break;
+                    }
 
                 case "Del":
-                   //this.Element.textarea.value = this.Element.textarea.value.slice(0, -1);
-                    this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart)+this.Element.textarea.value.slice(cursorPositionStart+2,this.Element.textarea.length);
-                    //this.Element.textarea.value = this.Element.textarea.value.slice(0, textarea.selectionStart)+this.Element.textarea.value.slice(textarea.selectionEnd,textarea.length);
-                     this.Element.textarea.selectionStart = cursorPositionStart;
-                     this.Element.textarea.selectionEnd = cursorPositionStart;
+                    this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart-1)+this.Element.textarea.value.slice(cursorPositionStart,this.Element.textarea.length);
+                     this.Element.textarea.selectionStart = cursorPositionEnd-1;
+                     this.Element.textarea.selectionEnd = cursorPositionEnd-1;
                     break;
 
                 case "Enter":
-                    this.Element.textarea.value += "\r\n";
+                    this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart-1)+"\r\n"+this.Element.textarea.value.slice(cursorPositionStart-1,this.Element.textarea.length)
+                    this.Element.textarea.selectionStart = cursorPositionStart;
+                     this.Element.textarea.selectionEnd = cursorPositionEnd;
                     break;
 
                 case "Tab":
-                    this.Element.textarea.value += "\t";
+                    this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart-1)+"\t"+this.Element.textarea.value.slice(cursorPositionStart-1,this.Element.textarea.length)
+                    this.Element.textarea.selectionStart = cursorPositionStart;
+                     this.Element.textarea.selectionEnd = cursorPositionEnd;
                     break;
 
                 case "Space":
-                    this.Element.textarea.value += " ";
+                    this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart-1)+" "+this.Element.textarea.value.slice(cursorPositionStart-1,this.Element.textarea.length)
+                    this.Element.textarea.selectionStart = cursorPositionEnd;
+                     this.Element.textarea.selectionEnd = cursorPositionEnd;
                     break;
     
                 case "→":
-                    this.Element.textarea.selectionStart = cursorPositionStart+1;
-                    this.Element.textarea.selectionEnd = cursorPositionEnd+1;
+                    this.Element.textarea.selectionStart = cursorPositionEnd;
+                    this.Element.textarea.selectionEnd = cursorPositionEnd;
                    break;
 
                 case "←" :
-                    this.Element.textarea.selectionStart = cursorPositionStart-1;
-                    this.Element.textarea.selectionEnd = cursorPositionEnd-1;
+                    this.Element.textarea.selectionStart = cursorPositionEnd-2;
+                    this.Element.textarea.selectionEnd = cursorPositionEnd-2;
                     break;
-
+                    
 
                 default:
                     if (!this.SystemKeys.includes(event.target.innerText))
-                        this.Element.textarea.value += event.target.innerText;
+                        this.Element.textarea.value = this.Element.textarea.value.slice(0,cursorPositionStart-1)+event.target.innerText+this.Element.textarea.value.slice(cursorPositionStart-1,this.Element.textarea.length)
+                       this.Element.textarea.selectionStart = cursorPositionEnd;
+                        this.Element.textarea.selectionEnd = cursorPositionEnd;
+                } 
             }
         })
-        )
-
     }
+    
+   
 
     _keyDown() {
         let buttons = document.querySelectorAll('.button');
@@ -299,11 +306,6 @@ class KeyBoard {
                                 elem.innerText = elem.innerText.toLowerCase();
                         })
                     }
-                    if(!event.classList.contains('capsLock')){
-                    event.classList.add('capsLock') }
-                    else{
-                        event.classList.remove('capsLock')
-                    }
             }
         })
     }
@@ -322,11 +324,7 @@ class KeyBoard {
                                 elem.innerText = elem.innerText.toLowerCase();
                         })
                     }
-                    if(!event.classList.contains('capsLock')){
-                    event.classList.add('capsLock') }
-                    else{
-                        event.classList.remove('capsLock')
-                    }
+               
         })
     }
     _languageValue() {
