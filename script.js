@@ -1,3 +1,5 @@
+
+
 class KeyBoard {
 
     Element = {
@@ -8,7 +10,7 @@ class KeyBoard {
 
     Properties = {
         caps: false,
-        shift: false,
+        shift: true, // false - english  &&  true - russian
         control :false,
         alt: false
     }
@@ -44,7 +46,12 @@ class KeyBoard {
     ShiftKeysNormalValue2 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=','\\','.'];
 
     constructor() {
-       
+        if (window.localStorage.getItem('lang')){
+            this.Properties.shift = window.localStorage.getItem('lang') === 'true';
+        } else {
+            this.Properties.shift = true;
+            window.localStorage.setItem('lang', this.Properties.shift);
+        }
         this.Element.areaKeyBoard = document.createElement("div");
         this.Element.KeysBoard = document.createElement("div");
         this.Element.textarea = document.createElement("textarea");
@@ -76,6 +83,9 @@ class KeyBoard {
     _createKeys() {
         const fragment = document.createDocumentFragment();
         const buttonToBr = ['Backspace', 'Del', 'Enter','↑' ];
+
+        if (this.Properties.shift)
+        {
         this.KeysValuesEng.forEach(element => {
             let element1 = document.createElement('button');
             element1.classList.add('button');
@@ -85,8 +95,22 @@ class KeyBoard {
             if (buttonToBr.includes(element)) {
                 fragment.appendChild(document.createElement("br"));
             }
-
+         
         })
+    }
+    else {
+        this.KeysValuesRu.forEach(element => {
+            let element1 = document.createElement('button');
+            element1.classList.add('button');
+            element1.setAttribute('type', 'button');
+            element1.innerText = element;
+            fragment.appendChild(element1);
+             if (buttonToBr.includes(element)) {
+                 fragment.appendChild(document.createElement("br"));
+             }
+            }
+            )
+     }
         return fragment;
     }
 
@@ -141,7 +165,8 @@ class KeyBoard {
                     this.Element.textarea.selectionStart = cursorPositionEnd-2;
                     this.Element.textarea.selectionEnd = cursorPositionEnd-2;
                     break;
-                    
+
+    
 
                 default:
                     if (!this.SystemKeys.includes(event.target.innerText))
@@ -333,6 +358,7 @@ class KeyBoard {
                 this.Properties.control = true;
                 if ((this.Properties.control) && (this.Properties.alt)) {
                     this.Properties.shift = !this.Properties.shift;
+                    window.localStorage.setItem('lang', this.Properties.shift);
                     let i = 0;
                     if (!this.Properties.shift) {
                         document.querySelectorAll(".button").forEach((elem) => {
@@ -367,6 +393,7 @@ class KeyBoard {
                this.Properties.alt = true;
                if ((this.Properties.control) && (this.Properties.alt)) {
                     this.Properties.shift = !this.Properties.shift;
+                    window.localStorage.setItem('lang', this.Properties.shift);
                     let i = 0;
                     if (!this.Properties.shift) {
                         document.querySelectorAll(".button").forEach((elem) => {
@@ -404,6 +431,7 @@ class KeyBoard {
                 this.Properties.control = false;
                 if ((this.Properties.control) && (this.Properties.alt)) {
                     this.Properties.shift = !this.Properties.shift;
+                    window.localStorage.setItem('lang', this.Properties.shift);
                     let i = 0;
                     if (!this.Properties.shift) {
                         document.querySelectorAll(".button").forEach((elem) => {
@@ -442,6 +470,7 @@ class KeyBoard {
                 this.Properties.alt = false;
                 if ((this.Properties.control) && (this.Properties.alt)) {
                     this.Properties.shift = !this.Properties.shift;
+                    window.localStorage.setItem('lang', this.Properties.shift);
                     let i = 0;
                     if (!this.Properties.shift) {
                         document.querySelectorAll(".button").forEach((elem) => {
