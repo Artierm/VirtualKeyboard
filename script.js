@@ -60,7 +60,7 @@ class KeyBoard {
         this._capsMouseDown();
         this._keyUpButton();
         this._mouseShiftRightDown();
-        this.__mouseShiftRightUp();
+        this._mouseShiftRightUp();
     }
 
 
