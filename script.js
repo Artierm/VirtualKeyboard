@@ -6,6 +6,7 @@ class KeyBoard {
         areaKeyBoard: null,
         KeysBoard: null,
         textarea: null,
+        information: null
     }
 
     Properties = {
@@ -57,18 +58,21 @@ class KeyBoard {
         this._languageValue();
         this._keyShiftRightDown();
         this._capsMouseDown();
-        this._keyUpButton()
+        this._keyUpButton();
+        this._mouseShiftRightDown();
+        this.__mouseShiftRightUp();
     }
 
 
     _init() {
-        if (window.localStorage.getItem('lang')){
-            this.Properties.shift = window.localStorage.getItem('lang') === 'true';
-        } else {
-            this.Properties.shift = true;
-            window.localStorage.setItem('lang', this.Properties.shift);
-        }
-
+        // if (window.localStorage.getItem('lang')){
+        //     this.Properties.shift = window.localStorage.getItem('lang') === 'true';
+        // } else {
+        //     this.Properties.shift = true;
+        //     window.localStorage.setItem('lang', this.Properties.shift);
+        // }
+        document.querySelector('body').inn
+        this.Element.information = document.createElement("p");
         this.Element.areaKeyBoard = document.createElement("div");
         this.Element.KeysBoard = document.createElement("div");
         this.Element.textarea = document.createElement("textarea");
@@ -76,15 +80,24 @@ class KeyBoard {
         this.Element.areaKeyBoard.classList.add("areaKeyBoard");
         this.Element.KeysBoard.classList.add("keysBoard");
         this.Element.textarea.classList.add("textarea");
+        this.Element.information.classList.add("inform");
         this.Element.KeysBoard.appendChild(this._createKeys());
         
+        this.Element.information.innerHTML = "Сделано на Windows<br>Смена языка ctrl + alt";
 
         this.Element.areaKeyBoard.appendChild(this.Element.KeysBoard);
         document.body.appendChild(this.Element.areaKeyBoard);
         document.body.appendChild(this.Element.textarea);
+        document.body.appendChild(this.Element.information);
+
+        let buttons = document.querySelectorAll('.button');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].setAttribute('id', `${this.KeysEventCode[i]}`)
+        }
     }
 
 
+   
     _createKeys() {
         const fragment = document.createDocumentFragment();
         const buttonToBr = ['Backspace', 'Del', 'Enter','↑' ];
@@ -221,6 +234,34 @@ class KeyBoard {
         })
     }    
 
+    _mouseShiftRightDown() {
+        document.querySelector('#ShiftRight').addEventListener('mousedown', (event) => {
+
+            if (this.Properties.shift){
+                for (let i = 0; i < this.ShiftKeysCode.length; i++) {
+                    document.querySelector(`#${this.ShiftKeysCode[i]}`).innerText = this.ShiftKeysValue[i];
+                }
+            } else {
+                for (let i = 0; i < this.ShiftKeysCode2.length; i++) {
+                    document.querySelector(`#${this.ShiftKeysCode2[i]}`).innerText = this.ShiftKeysValue2[i];
+                }
+            }
+
+            if (!this.Properties.caps){
+                document.querySelectorAll(".button").forEach(elem => {
+                    if (elem.innerText.length == 1)
+                        elem.innerText = elem.innerText.toUpperCase();
+                })
+            } else {
+                document.querySelectorAll(".button").forEach(elem => {
+                    if (elem.innerText.length == 1)
+                        elem.innerText = elem.innerText.toLowerCase();
+                })
+            }
+        })
+        
+    }     
+  
     _mouseShiftLeftDown() {
         document.querySelector('#ShiftLeft').addEventListener('mousedown', (event) => {
 
@@ -275,6 +316,31 @@ class KeyBoard {
         })
     }
 
+    _mouseShiftRightUp() {
+        document.querySelector('#ShiftRight').addEventListener('mouseup', (event) => {
+            if (this.Properties.shift){
+                for (let i = 0; i < this.ShiftKeysCode.length; i++) {
+                    document.querySelector(`#${this.ShiftKeysCode[i]}`).innerText = this.ShiftKeysNormalValue[i];               
+            }
+            } else {
+                for (let i = 0; i < this.ShiftKeysCode2.length; i++) {
+                    document.querySelector(`#${this.ShiftKeysCode2[i]}`).innerText = this.ShiftKeysNormalValue2[i]; 
+                }
+
+            }
+            if (!this.Properties.caps){
+                document.querySelectorAll(".button").forEach(elem => {
+                    if (elem.innerText.length == 1)
+                        elem.innerText = elem.innerText.toLowerCase();
+                })
+            } else {
+                document.querySelectorAll(".button").forEach(elem => {
+                    if (elem.innerText.length == 1)
+                        elem.innerText = elem.innerText.toUpperCase();
+                })
+            }
+        })
+    }
 
     _capsMouseDown () {
         document.querySelector('#CapsLock').addEventListener('mouseup', () => {

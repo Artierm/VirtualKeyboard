@@ -80,3 +80,10 @@
     border-color: rgba(165 , 42 , 42 ,0.8);
     border-bottom: 2px;   
 }
+
+.inform{
+    position: fixed;
+    z-index: 5;
+    top: 710px;
+    left: 10px;
+}
