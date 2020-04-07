@@ -65,12 +65,12 @@ class KeyBoard {
 
 
     _init() {
-        // if (window.localStorage.getItem('lang')){
-        //     this.Properties.shift = window.localStorage.getItem('lang') === 'true';
-        // } else {
-        //     this.Properties.shift = true;
-        //     window.localStorage.setItem('lang', this.Properties.shift);
-        // }
+        if (window.localStorage.getItem('lang')){
+            this.Properties.shift = window.localStorage.getItem('lang') === 'true';
+        } else {
+            this.Properties.shift = true;
+            window.localStorage.setItem('lang', this.Properties.shift);
+        }
         document.querySelector('body').inn
         this.Element.information = document.createElement("p");
         this.Element.areaKeyBoard = document.createElement("div");
