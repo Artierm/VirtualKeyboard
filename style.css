@@ -79,6 +79,7 @@
     outline: none;
     border-color: rgba(165 , 42 , 42 ,0.8);
     border-bottom: 2px;   
+    resize: none;
 }
 
 .inform{
